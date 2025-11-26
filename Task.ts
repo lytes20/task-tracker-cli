@@ -23,6 +23,10 @@ class Task {
     this.status = "done";
     this.updatedAt = new Date();
   }
+
+  toString(): string {
+    return `Task ${this.id}: desc: ${this.description}, status: ${this.status}`;
+  }
 }
 
 export default Task;
