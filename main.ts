@@ -1,6 +1,13 @@
 import readline from "node:readline/promises";
-import Task from "./Task";
-import { createTask, editTask, viewTasks } from "./utils";
+
+import {
+  createTask,
+  deleteTask,
+  editTask,
+  finishTask,
+  startTask,
+  viewTasks,
+} from "./utils";
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -13,8 +20,10 @@ Here is a list of things you can do:
 1. Create a task
 2. View tasks
 3. Edit a task
-4. Delete a task
-5. Exit
+4. Start a task
+5. Finish a task
+6. Delete a task
+7. Exit
 Please enter a number of an action you want to accomplish today(For example enter number 1 to create a task):
 `;
 
@@ -30,17 +39,32 @@ async function main() {
       case "2":
         viewTasks();
         break;
-      case "3":
+      case "3": {
         const taskId = await rl.question("Enter task ID: ");
         const newTaskDescription = await rl.question(
           "Enter new task description: "
         );
         editTask(taskId, newTaskDescription);
         break;
-      case "4":
-        // TODO: Delete task
+      }
+
+      case "4": {
+        const taskId = await rl.question("Enter task ID: ");
+        startTask(taskId);
         break;
-      case "5":
+      }
+
+      case "5": {
+        const taskId = await rl.question("Enter task ID: ");
+        finishTask(taskId);
+        break;
+      }
+      case "6": {
+        const taskId = await rl.question("Enter task ID: ");
+        deleteTask(taskId);
+        break;
+      }
+      case "7":
         rl.close();
         break;
       default:
