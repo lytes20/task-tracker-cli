@@ -11,40 +11,59 @@ async function createTask(desc: string): Promise<string> {
 }
 
 // View Tasks
-async function viewTasks() {
+async function getTasks(): Promise<Task[]> {
   const tasks: Task[] = await readFile();
-  console.log("tasks", tasks);
+  return tasks;
 }
 
 // Edit a task description
-async function editTask(taskId: string, desc: string) {
+async function editTask(taskId: string, desc: string): Promise<string> {
   const tasks: Task[] = await readFile();
   const taskToEdit = tasks.find((task) => task.id == Number(taskId));
   taskToEdit.description = desc;
   await writeToFile(tasks);
+  return "";
 }
 
 // Start a task
-async function startTask(taskId: string) {
+async function startTask(taskId: string): Promise<string> {
   const tasks: Task[] = await readFile();
   const task = tasks.find((t) => t.id == Number(taskId));
   task.start();
   await writeToFile(tasks);
+  return "";
 }
 
 // Finish a task
-async function finishTask(taskId: string) {
+async function finishTask(taskId: string): Promise<string> {
   const tasks: Task[] = await readFile();
   const task = tasks.find((t) => t.id == Number(taskId));
   task.finish();
   await writeToFile(tasks);
+  return "";
+}
+
+// Finish a task
+async function filterTasksByStatus(status: string): Promise<Task[]> {
+  const tasks: Task[] = await readFile();
+  const tasksByStatus = tasks.filter((t) => t.status == status);
+  return tasksByStatus;
 }
 
 // Delete a task
-async function deleteTask(taskId: string) {
+async function deleteTask(taskId: string): Promise<string> {
   const tasks: Task[] = await readFile();
   const taskIndex = tasks.findIndex((t) => t.id == Number(taskId));
   tasks.splice(taskIndex, 1);
   await writeToFile(tasks);
+  return "";
 }
-export { createTask, viewTasks, editTask, startTask, finishTask, deleteTask };
+export {
+  createTask,
+  getTasks,
+  editTask,
+  startTask,
+  finishTask,
+  deleteTask,
+  filterTasksByStatus,
+};

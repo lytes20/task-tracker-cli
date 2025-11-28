@@ -1,78 +1,80 @@
 #! /usr/bin/env node
-
-import readline from "node:readline/promises";
+import { program } from "commander";
 
 import {
   createTask,
   deleteTask,
   editTask,
+  filterTasksByStatus,
   finishTask,
   startTask,
-  viewTasks,
+  getTasks,
 } from "./utils.js";
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+import Task from "./Task.js";
 
-console.log("----- Task Tracker ----");
-console.log("Welcome to task tracker application");
-const prompt = `
-Here is a list of things you can do:
-1. Create a task
-2. View tasks
-3. Edit a task
-4. Start a task
-5. Finish a task
-6. Delete a task
-7. Exit
-Please enter a number of an action you want to accomplish today(For example enter number 1 to create a task):
-`;
+// Add a task
+program
+  .command("add <description>")
+  .description("Adds a new task")
+  .action(async (description) => {
+    const response: string = await createTask(description);
+    console.log(response);
+  });
 
-async function main() {
-  let running = true;
-  while (running) {
-    const action = await rl.question(prompt);
-    switch (action) {
-      case "1":
-        const desc = await rl.question("Enter task: ");
-        createTask(desc);
-        break;
-      case "2":
-        viewTasks();
-        break;
-      case "3": {
-        const taskId = await rl.question("Enter task ID: ");
-        const newTaskDescription = await rl.question(
-          "Enter new task description: "
-        );
-        editTask(taskId, newTaskDescription);
-        break;
-      }
-
-      case "4": {
-        const taskId = await rl.question("Enter task ID: ");
-        startTask(taskId);
-        break;
-      }
-
-      case "5": {
-        const taskId = await rl.question("Enter task ID: ");
-        finishTask(taskId);
-        break;
-      }
-      case "6": {
-        const taskId = await rl.question("Enter task ID: ");
-        deleteTask(taskId);
-        break;
-      }
-      case "7":
-        rl.close();
-        break;
-      default:
-        console.log("Invalid input. Try again");
+// View all tasks, view tasks by status
+program
+  .command("list")
+  .argument("[status]", "Task status")
+  .description("View all tasks, filter tasks by status")
+  .action(async (status) => {
+    if (!status) {
+      const tasks: Task[] = await getTasks();
+      console.log(tasks);
     }
-  }
-  rl.close();
-}
-main();
+    const allowed = ["todo", "in-progress", "done"];
+    if (!allowed.includes(status)) {
+      console.error(
+        `Invalid status: ${status}. Choose one of: ${allowed.join(", ")}`
+      );
+      process.exit(1);
+    }
+    const tasks: Task[] = await filterTasksByStatus(status);
+    console.log(tasks);
+  });
+
+// Edit a task
+program
+  .command("update <taskId> <newDescription>")
+  .description("Edit a task")
+  .action(async (taskId, newDescription) => {
+    const response: string = await editTask(taskId, newDescription);
+    console.log(response);
+  });
+
+// Start a task(Mark a task to be in progress)
+program
+  .command("mark-in-progress <taskId>")
+  .description("Start a task")
+  .action(async (taskId) => {
+    const response: string = await startTask(taskId);
+    console.log(response);
+  });
+
+// Finish a task(Mark a task as done)
+program
+  .command("mark-done <taskId>")
+  .description("Finish a task")
+  .action(async (taskId) => {
+    const response: string = await finishTask(taskId);
+    console.log(response);
+  });
+
+// Delete a task by id
+program
+  .command("delete <taskId>")
+  .description("Finish a task")
+  .action(async (taskId) => {
+    const response: string = await deleteTask(taskId);
+    console.log(response);
+  });
+program.parse(process.argv);

@@ -3,18 +3,18 @@
     "description": "Go to Babylon",
     "createdAt": "2025-11-28T02:38:32.827Z",
     "id": 1,
-    "updatedAt": "2025-11-28T03:23:12.286Z",
-    "status": "in-progress"
+    "updatedAt": "2025-11-28T04:12:09.152Z",
+    "status": "done"
   },
   {
     "description": "Trees",
     "createdAt": "2025-11-28T03:03:59.133Z",
     "id": 2,
-    "updatedAt": "2025-11-28T03:03:59.133Z",
-    "status": "todo"
+    "updatedAt": "2025-11-28T04:12:36.578Z",
+    "status": "in-progress"
   },
   {
-    "description": "Fuck the food",
+    "description": "Fuck up the food",
     "createdAt": "2025-11-28T03:22:52.500Z",
     "id": 3,
     "updatedAt": "2025-11-28T03:22:52.500Z",
