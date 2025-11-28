@@ -1,13 +1,25 @@
 {
-  "name": "task-cli",
+  "name": "kazi-leo",
   "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
+  "main": "main.ts",
+  "bin": {
+    "task-cli": "./dist/main.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "dev": "tsx main.ts"
+    "build": "tsc",
+    "dev": "tsx main.ts",
+    "start": "node dist/main.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Gideon Bamuleseyo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lytes20/task-tracker-cli"
+  },
+  "homepage": "https://github.com/lytes20/task-tracker-cli",
   "license": "ISC",
   "description": "",
   "devDependencies": {

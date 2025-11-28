@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import readline from "node:readline/promises";
 
 import {
@@ -7,7 +9,7 @@ import {
   finishTask,
   startTask,
   viewTasks,
-} from "./utils";
+} from "./utils.js";
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
