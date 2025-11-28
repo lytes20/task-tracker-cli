@@ -14,6 +14,14 @@ class Task {
     this.status = "todo";
   }
 
+  static fromJSON(obj: any): Task {
+    const task = new Task(obj.description, obj.id);
+    task.status = obj.status;
+    task.createdAt = new Date(obj.createdAt);
+    task.updatedAt = new Date(obj.updatedAt);
+    return task;
+  }
+
   start() {
     this.status = "in-progress";
     this.updatedAt = new Date();
