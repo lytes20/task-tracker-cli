@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import Task from "./Task";
+import Task from "./Task.js";
 const FILE_PATH = "tasks.json";
 
 // Write to the file

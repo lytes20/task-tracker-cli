@@ -1,7 +1,8 @@
 {
   "name": "kazi-leo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "main.ts",
+  "type": "module",
   "bin": {
     "task-cli": "./dist/main.js"
   },
